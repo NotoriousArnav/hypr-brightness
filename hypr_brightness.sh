@@ -41,16 +41,29 @@ if [ $flag -eq 1 ]; then
   fi
 fi
 
+arg="$1"
+
+# If --install provided Install to $HOME/.local/bin using install command
+if [ "$arg" == "install" ]; then
+  echo "Installing to $HOME/.local/bin"
+  mkdir -p $HOME/.local/bin
+  install -v -m 777 $0 $HOME/.local/bin/hypr_brightness.sh
+  exit 0
+fi
+
 if [ "$#" -ne 1 ]; then
     echo "No direction parameter provided"
     echo "$usage"
     exit 1
 fi
 
-arg="$1"
 
 if [ "$arg" == "help" ] || [ "$arg" == "--help" ] || [ "$arg" == "-h" ]; then
-    echo "$usage"
+    echo $usage
+    echo "Install: $0 install"
+    echo "- Installs the Script to $HOME/.local/bin"
+    echo "Help: $0 help"
+    echo "- Displays this help message"
     exit 0
 fi
 
